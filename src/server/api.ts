@@ -234,7 +234,6 @@ export default async (req: ApiRequest) => {
     return out(200, {
       databaseConfigured: !!process.env.MONGODB_URI,
       adminConfigured: !!adminEmail() && !!adminPassword(),
-      adminEmail: adminEmail(),
     });
   }
   if (!process.env.MONGODB_URI) {

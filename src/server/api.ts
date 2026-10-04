@@ -240,7 +240,7 @@ export default async (req: ApiRequest) => {
     return out(503, { error: "The app is not configured yet. Set MONGODB_URI in your environment variables." });
   }
   try {
-    const { users, movies, settings } = await getCollections();
+    const { db, users, movies, settings } = await getCollections();
     await users.createIndex({ email: 1 }, { unique: true });
     await movies.createIndex({ id: 1 }, { unique: true });
     await bootstrapAdmin(users);
@@ -353,6 +353,20 @@ export default async (req: ApiRequest) => {
       const n = Math.max(0, Math.min(100000, Math.floor(+body.maxUsers || 0)));
       await settings.updateOne({ id: "cfg" }, { $set: { maxUsers: n } }, { upsert: true });
       return out(200, { ok: true });
+    }
+
+    if (route === "/admin/storage" && m === "GET") {
+      let s: any = null;
+      try { s = await db.command({ dbStats: 1 }); } catch { s = null; }
+      let data = Number(s?.dataSize || 0);
+      const index = Number(s?.indexSize || 0);
+      if (!s) {
+        for (const c of [users, movies, settings]) {
+          const r = await c.aggregate([{ $group: { _id: null, n: { $sum: { $bsonSize: "$$ROOT" } } } }]).toArray();
+          data += Number(r[0]?.n || 0);
+        }
+      }
+      return out(200, { limit: 512 * 1024 * 1024, used: data + index, data, index, movies: await movies.estimatedDocumentCount(), users: await userCount(users) });
     }
 
     if (route === "/movies" && m === "POST") {

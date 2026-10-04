@@ -27,16 +27,15 @@ input:focus,select:focus,textarea:focus,button:focus-visible,.card:focus-visible
 .chip.on{background:var(--ac);color:var(--btx);border-color:var(--ac);font-weight:700}
 .hero{margin:18px 5vw 0;border-radius:22px;height:min(62vh,520px);min-height:360px;padding:0;display:block;position:relative;overflow:hidden;border:1px solid var(--ln)}
 .hero::after{display:none}
-.hero-track{position:relative;z-index:1;display:flex;width:100%;height:100%}
-.hero-track.is-scrolling{width:max-content;animation:hero-scroll var(--scroll-duration) linear infinite}
-.hero-track:not(.is-scrolling) .hero-slide{flex-basis:100%;margin:0}
-.hero-track:hover,.hero-track:focus-within{animation-play-state:paused}
-.hero-slide{flex:0 0 min(90vw,1200px);height:100%;margin-right:16px;padding:clamp(24px,5vw,60px);display:flex;flex-direction:column;justify-content:flex-end;gap:12px;position:relative;overflow:hidden;border-radius:20px;background-position:center!important;background-size:cover!important}
+.hero-track{position:relative;z-index:1;display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.hero-track::-webkit-scrollbar{display:none}
+.hnav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:42px;height:42px;border-radius:50%;border:0;background:rgba(0,0,0,.45);color:#fff;font-size:1.7rem;line-height:1;cursor:pointer}.hnav:hover{background:rgba(0,0,0,.75)}.hnav.prev{left:12px}.hnav.next{right:12px}
+@media(hover:none){.hnav{display:none}}
+.hero-slide{flex:0 0 100%;scroll-snap-align:start;height:100%;padding:clamp(24px,5vw,60px);display:flex;flex-direction:column;justify-content:flex-end;gap:12px;position:relative;overflow:hidden;border-radius:20px;background-position:center!important;background-size:cover!important}
 .hero-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .hero-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(5,14,18,.88));pointer-events:none}
 .hero-slide>*{position:relative;z-index:1}
 .hero-slide>.hero-art{position:absolute;z-index:0}
-@keyframes hero-scroll{to{transform:translateX(-50%)}}
 .meta{display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem;color:#fff;opacity:.9}
 .meta span{border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:1px 8px}
 .hero h1{margin:0;font-size:clamp(2.6rem,9vw,6rem);line-height:.95;font-weight:700;letter-spacing:-.035em;max-width:14ch}
@@ -76,9 +75,14 @@ footer{margin:48px 5vw 28px;color:var(--mu);font-size:.85rem;max-width:70ch}
 .li span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sm{border:1px solid var(--ln);background:none;color:var(--tx);border-radius:8px;padding:4px 10px;cursor:pointer;font:inherit}
 .note{color:var(--mu);font-size:.85rem;margin:0}
-@media(max-width:720px){.adm{padding:16px}.g2{grid-template-columns:1fr 1fr}.ov{padding:10px}.box{max-height:calc(100dvh - 20px)}.hero{height:min(58vh,480px);min-height:320px}.hero-slide{flex-basis:90vw}}
-@media(max-width:560px){.g2{grid-template-columns:1fr}.card{width:150px}.poster{height:215px}.adm{padding:12px}.li{align-items:flex-start;flex-wrap:wrap}.li span{flex-basis:100%;white-space:normal;overflow-wrap:anywhere}.top{gap:8px}.admin-box{border-radius:12px}.info{padding:14px}.ott{padding:18px}.ottrow{width:100%}.ottl{flex:1 1 130px;justify-content:center}.hero{margin:12px 3vw 0;min-height:290px;height:52vh;border-radius:16px}.hero-slide{flex-basis:94vw;margin-right:10px;padding:22px;border-radius:14px}.hero h1{font-size:clamp(2.2rem,12vw,4rem)}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}.hero-track.is-scrolling{animation:none!important;width:100%;overflow-x:auto;scroll-snap-type:x mandatory}.hero-track.is-scrolling .hero-slide{scroll-snap-align:start;flex-basis:100%;margin:0}}
+.admin-box .top{position:sticky;top:0;z-index:2;background:var(--bg2);padding:4px 0 10px;border-bottom:1px solid var(--ln)}
+.admin-box .tabs{overflow-x:auto}.admin-box .tabs .chip{flex:none;white-space:nowrap}
+.sec{border:1px solid var(--ln);border-radius:14px;padding:14px;display:grid;gap:10px;min-width:0}.sec h4{margin:0;font-size:1.05rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}.stat{border:1px solid var(--ln);border-radius:12px;padding:12px}.stat b{display:block;font-size:1.25rem}.stat small{color:var(--mu)}
+.bar{height:14px;border-radius:99px;background:var(--ln);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .4s}.bar.warn i{background:#e5a100}.bar.bad i{background:#e5484d}
+@media(max-width:720px){.adm{padding:16px}.g2{grid-template-columns:1fr 1fr}.ov{padding:10px}.box{max-height:calc(100dvh - 20px)}.hero{height:min(58vh,480px);min-height:320px}}
+@media(max-width:560px){.g2{grid-template-columns:1fr}.card{width:150px}.poster{height:215px}.adm{padding:12px}.li{align-items:flex-start;flex-wrap:wrap}.li span{flex-basis:100%;white-space:normal;overflow-wrap:anywhere}.top{gap:8px}.admin-box{border-radius:12px}.info{padding:14px}.ott{padding:18px}.ottrow{width:100%}.ottl{flex:1 1 130px;justify-content:center}.hero{margin:12px 3vw 0;min-height:290px;height:52vh;border-radius:16px}.hero-slide{padding:22px;border-radius:14px}.hero h1{font-size:clamp(2.2rem,12vw,4rem)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 .box .btn.ghost{background:transparent;border:1px solid var(--ln);color:var(--tx)}
 .li:hover{background:color-mix(in srgb,var(--tx) 7%,transparent)}
 #auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
@@ -163,9 +167,10 @@ footer{margin:48px 5vw 28px;color:var(--mu);font-size:.85rem;max-width:70ch}
 
 <div class="ov" id="admin" role="dialog" aria-modal="true" aria-label="Admin panel"><div class="box admin-box"><div class="adm">
 <div class="top"><h3>Admin panel</h3><button class="sm" id="aX">Close</button></div>
-<div class="tabs"><button class="chip on" id="atc">Content</button><button class="chip" id="atu">Users</button><button class="chip" id="ats">Settings</button></div>
+<div class="tabs"><button class="chip on" id="atc">Content</button><button class="chip" id="atu">Users</button><button class="chip" id="ats">Settings</button><button class="chip" id="atd">Storage</button></div>
 <div id="apc" class="adm" style="padding:0">
-<div class="list" id="cl"></div>
+<div class="sec"><h4>All content <span class="note" id="cc"></span></h4><div class="list" id="cl"></div></div>
+<div class="sec"><h4 id="cft">Add new content</h4>
 <div><label class="lbl" for="fU">Video or website link</label><input id="fU" type="url" placeholder="https://youtube.com/... or any website/video URL" required><p class="note">YouTube, direct video, and regular website links are supported. Some sites block in-app playback; users can open those links directly.</p></div>
 <div class="g2"><div><label class="lbl" for="fT">Title</label><input id="fT" ></div><div><label class="lbl" for="fG">Genre</label><input id="fG" placeholder="Animation"></div><div><label class="lbl" for="fY">Year</label><input id="fY" type="number"></div><div><label class="lbl" for="fM">Minutes</label><input id="fM" type="number"></div><div><label class="lbl" for="fL">Language</label><input id="fL" ></div><div><label class="lbl" for="fA">Age rating</label><input id="fA" placeholder="U/A 13+"></div><div><label class="lbl" for="fR">Director</label><input id="fR" ></div><div><label class="lbl" for="fC">Cast</label><input id="fC" ></div></div>
 <div><label class="lbl" for="fD">Description</label><textarea id="fD" rows="2"></textarea></div>
@@ -176,8 +181,10 @@ footer{margin:48px 5vw 28px;color:var(--mu);font-size:.85rem;max-width:70ch}
 <p class="err" id="cErr"></p>
 <div class="btns"><button class="btn" id="cSave">Save</button><button class="btn ghost" id="cNew">New</button></div>
 </div>
-<div id="apu" hidden><p class="note" id="uc"></p><div class="list" id="ul" style="max-height:360px"></div><p class="note">Passwords are stored as one-way hashes, so they cannot be viewed. Use Reset password to set a new one.</p></div>
-<div id="aps" hidden><div><label class="lbl" for="sMax">Maximum users (0 = no limit)</label><input id="sMax" type="number" min="0"></div><p class="note" id="sInfo"></p><p class="err" id="sErr"></p><div class="btns"><button class="btn" id="sSave">Save</button></div></div>
+</div>
+<div id="apu" hidden><div class="sec"><h4>Users</h4><p class="note" id="uc"></p><div class="list" id="ul" style="max-height:360px"></div><p class="note">Passwords are stored as one-way hashes, so they cannot be viewed. Use Reset password to set a new one.</p></div></div>
+<div id="aps" hidden><div class="sec"><h4>Settings</h4><div><label class="lbl" for="sMax">Maximum users (0 = no limit)</label><input id="sMax" type="number" min="0"></div><p class="note" id="sInfo"></p><p class="err" id="sErr"></p><div class="btns"><button class="btn" id="sSave">Save</button></div></div></div>
+<div id="apd" hidden><div class="sec"><h4>Database storage</h4><div class="bar" id="dBar"><i id="dFill"></i></div><p class="note" id="dTxt">Loading...</p><div class="stats" id="dStats"></div><p class="note">Limit shown is 512 MB (free MongoDB Atlas cluster). Numbers come from the database itself; the Atlas dashboard is the final word. Custom posters use the most space.</p><p class="err" id="dErr"></p><div class="btns"><button class="btn ghost" id="dRef">Refresh</button></div></div></div>
 </div></div></div>
 <script>
 let M=[],f="All",qs="",cur=null,wl=[];
@@ -194,9 +201,13 @@ const bg=h=>`linear-gradient(145deg,hsl(${h},62%,44%),hsl(${(h+55)%360},58%,18%)
 const genres=()=>["All",...[...new Set(M.map(m=>m.g).filter(Boolean))],"My list"];
 const ytid=s=>{s=(s||"").trim();const r=s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/);return r?r[1]:(/^[\w-]{11}$/.test(s)?s:"")};
 function chips(){if(!genres().includes(f))f="All";$("chips").innerHTML=genres().map(x=>`<button class="chip ${x===f?"on":""}" data-g="${esc(x)}">${esc(x)}</button>`).join("")}
-function hero(){const featured=M.filter(m=>m.f);const items=featured.length?featured:M.slice(0,1);if(!items.length){$("hero").innerHTML="";return}
- const scrolling=items.length>1,slides=scrolling?[...items,...items]:items;
- $("hero").innerHTML=`<div class="hero-track ${scrolling?"is-scrolling":""}" ${scrolling?`style="--scroll-duration:${items.length*2}s"`:""}>${slides.map((m,i)=>`<article class="hero-slide" style="${bg(260)}" ${i>=items.length?'aria-hidden="true" inert':''}>${posterImg(m,true)}<div class="meta"><span>${esc(m.y)}</span><span>${esc(m.m)} min</span><span>${esc(m.g)}</span></div><h1>${esc(m.t)}</h1><p>${esc(m.d)}</p><div class="btns"><button class="btn" data-p="${esc(m.id)}">Watch now</button><button class="btn ghost" data-w="${esc(m.id)}">${wl.includes(m.id)?"Remove from list":"Add to my list"}</button></div></article>`).join("")}</div>`;attachPosterFallbacks($("hero"))}
+let heroT;
+function heroGo(d){const t=document.querySelector(".hero-track");if(!t||!t.clientWidth)return;const n=t.children.length,i=Math.round(t.scrollLeft/t.clientWidth);t.scrollTo({left:((i+d+n)%n)*t.clientWidth,behavior:"smooth"})}
+function heroAuto(){clearInterval(heroT);if(document.querySelectorAll(".hero-slide").length>1)heroT=setInterval(()=>{if(!document.hidden)heroGo(1)},4500)}
+$("hero").addEventListener("pointerdown",()=>heroAuto());
+function hero(){const old=document.querySelector(".hero-track"),keep=old&&old.clientWidth?Math.round(old.scrollLeft/old.clientWidth):0;const featured=M.filter(m=>m.f);const items=featured.length?featured:M.slice(0,1);if(!items.length){$("hero").innerHTML="";return}
+ const multi=items.length>1,slides=items;
+ $("hero").innerHTML=`<div class="hero-track">${slides.map((m,i)=>`<article class="hero-slide" style="${bg(260)}">${posterImg(m,true)}<div class="meta"><span>${esc(m.y)}</span><span>${esc(m.m)} min</span><span>${esc(m.g)}</span></div><h1>${esc(m.t)}</h1><p>${esc(m.d)}</p><div class="btns"><button class="btn" data-p="${esc(m.id)}">Watch now</button><button class="btn ghost" data-w="${esc(m.id)}">${wl.includes(m.id)?"Remove from list":"Add to my list"}</button></div></article>`).join("")}</div>${multi?'<button class="hnav prev" data-d="-1" aria-label="Previous">‹</button><button class="hnav next" data-d="1" aria-label="Next">›</button>':""}`;attachPosterFallbacks($("hero"));const t=$("hero").querySelector(".hero-track");if(keep&&t)t.scrollLeft=keep*t.clientWidth;$("hero").querySelectorAll(".hnav").forEach(b=>b.onclick=()=>{heroGo(+b.dataset.d);heroAuto()});heroAuto()}
 function card(m){const s=wl.includes(m.id);return `<div class="card" data-p="${esc(m.id)}" tabindex="0" role="button" aria-label="Play ${esc(m.t)}"><div class="poster" style="${bg(260)}">${posterImg(m)}${esc(m.t)}<button class="star ${s?"on":""}" data-w="${esc(m.id)}" aria-label="My list">${s?"★":"☆"}</button></div><small>${esc(m.y)} · ${esc(m.g)}</small></div>`}
 function rows(){
 let l=M.filter(m=>(m.t||"").toLowerCase().includes(qs));
@@ -287,12 +298,12 @@ $("moreBtn").onclick=e=>{e.stopPropagation();const m=$("menu");m.hidden=!m.hidde
 document.addEventListener("click",e=>{if(!e.target.closest(".more"))$("menu").hidden=true});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("menu").hidden=true;$("admin").classList.remove("open")}});
 const aClose=()=>$("admin").classList.remove("open");
-function aShow(t){aTab=t;["c","u","s"].forEach(k=>{$("ap"+k).hidden=k!==t;$("at"+k).classList.toggle("on",k===t)});if(t==="c")cList();if(t==="u")uList();if(t==="s")sLoad()}
+function aShow(t){aTab=t;["c","u","s","d"].forEach(k=>{$("ap"+k).hidden=k!==t;$("at"+k).classList.toggle("on",k===t)});if(t==="c")cList();if(t==="u")uList();if(t==="s")sLoad();if(t==="d")dLoad()}
 $("adminBtn").onclick=()=>{$("menu").hidden=true;$("admin").classList.add("open");aShow("c");cFill(null)};
-$("aX").onclick=aClose;["c","u","s"].forEach(k=>$("at"+k).onclick=()=>aShow(k));
+$("aX").onclick=aClose;["c","u","s","d"].forEach(k=>$("at"+k).onclick=()=>aShow(k));
 $("admin").addEventListener("click",e=>{if(e.target.id==="admin")aClose()});
-function cList(){$("cl").innerHTML=M.map(m=>`<div class="li"><span>${esc(m.t)} (${esc(m.y)})</span><button class="sm" data-ce="${esc(m.id)}">Edit</button><button class="sm" data-cd="${esc(m.id)}">Delete</button></div>`).join("")||'<p class="note">No movies yet.</p>'}
-function cFill(m){editing=m?m.id:null;posterData=m&&m.poster?m.poster:"";
+function cList(){$("cc").textContent="("+M.length+")";$("cl").innerHTML=M.map(m=>`<div class="li"><span>${esc(m.t)} (${esc(m.y)})</span><button class="sm" data-ce="${esc(m.id)}">Edit</button><button class="sm" data-cd="${esc(m.id)}">Delete</button></div>`).join("")||'<p class="note">No movies yet.</p>'}
+function cFill(m){$("cft").textContent=m?"Edit content":"Add new content";editing=m?m.id:null;posterData=m&&m.poster?m.poster:"";
  const v=(i,x)=>{$(i).value=x==null?"":x};
  v("fU",m?(m.kind==="yt"?"https://youtu.be/"+m.id:m.url):"");v("fT",m&&m.t);v("fG",m&&m.g);v("fY",m&&m.y);v("fM",m&&m.m);v("fL",m&&m.lang);v("fA",m&&m.age);v("fR",m&&m.dir);v("fC",m&&m.cast);v("fD",m&&m.d);
  $("fP").value="";$("fF").checked=!!(m&&m.f);$("fOk").checked=false;$("cErr").textContent="";$("pn").textContent=posterData?"Custom poster attached":"Leave blank to use the poster/preview from the link."}
@@ -308,10 +319,13 @@ async function uList(){$("ul").innerHTML='<p class="note">Loading...</p>';
  try{const j=await api("/admin/users");$("uc").textContent=j.users.length+" user(s)"+(j.maxUsers?" of "+j.maxUsers+" allowed":" (no limit)");
  $("ul").innerHTML=j.users.map(u=>`<div class="li"><span><b>${esc(u.name)}</b>${u.role==="admin"?" (admin)":""}<br><small>${esc(u.email)} · joined ${esc((u.createdAt||"").slice(0,10))} · ${esc(u.watch)} saved</small></span><button class="sm" data-up="${esc(u.id)}">Reset password</button>${u.self?"":`<button class="sm" data-ud="${esc(u.id)}">Delete</button>`}</div>`).join("")}
  catch(x){$("ul").innerHTML=`<p class="err">${esc(x.message)}</p>`}}
+const fmt=b=>b>=1048576?(b/1048576).toFixed(1)+" MB":Math.round(b/1024)+" KB";
+async function dLoad(){$("dErr").textContent="";$("dTxt").textContent="Loading...";try{const j=await api("/admin/storage"),p=Math.min(100,j.used/j.limit*100);$("dFill").style.width=p+"%";$("dBar").className="bar"+(p>=90?" bad":p>=70?" warn":"");$("dTxt").textContent=fmt(j.used)+" used of "+fmt(j.limit)+" ("+p.toFixed(1)+"%) · "+fmt(Math.max(0,j.limit-j.used))+" free";$("dStats").innerHTML=[["Data",fmt(j.data)],["Indexes",fmt(j.index)],["Movies",j.movies],["Users",j.users]].map(s=>`<div class="stat"><b>${s[1]}</b><small>${s[0]}</small></div>`).join("")}catch(x){$("dErr").textContent=x.message}}
+$("dRef").onclick=dLoad;
 async function sLoad(){$("sErr").textContent="";try{const j=await api("/admin/settings");$("sMax").value=j.maxUsers||0;$("sInfo").textContent="Currently "+j.count+" user(s)."}catch(x){$("sErr").textContent=x.message}}
 $("sSave").onclick=async()=>{try{await api("/admin/settings",{maxUsers:+$("sMax").value||0});await sLoad();$("sErr").textContent="Saved."}catch(x){$("sErr").textContent=x.message}};
 document.addEventListener("click",async e=>{
- const ce=e.target.closest("[data-ce]");if(ce){cFill(M.find(x=>x.id===ce.dataset.ce));return}
+ const ce=e.target.closest("[data-ce]");if(ce){cFill(M.find(x=>x.id===ce.dataset.ce));$("cft").scrollIntoView({behavior:"smooth",block:"start"});return}
  const cd=e.target.closest("[data-cd]");if(cd){if(!confirm("Delete this movie?"))return;try{await api("/movies/"+cd.dataset.cd,null,"DELETE");M=M.filter(x=>x.id!==cd.dataset.cd);render();cList()}catch(x){alert(x.message)}return}
  const ud=e.target.closest("[data-ud]");if(ud){if(!confirm("Delete this user?"))return;try{await api("/admin/users/"+ud.dataset.ud,null,"DELETE");uList()}catch(x){alert(x.message)}return}
  const up=e.target.closest("[data-up]");if(up){const p=prompt("New temporary password (min 6 characters):");if(!p)return;try{await api("/admin/users/"+up.dataset.up+"/password",{password:p});alert("Password updated. Share it with the user.")}catch(x){alert(x.message)}}
@@ -319,7 +333,6 @@ document.addEventListener("click",async e=>{
 (async()=>{
  try{
   const cfg=await api("/config");
-  if(cfg.adminEmail&&!$("aE").value)$("aE").value=cfg.adminEmail;
   if(!cfg.databaseConfigured){
    $("setupNote").hidden=false;
    $("setupNote").textContent="Login and sign up are unavailable until MongoDB is configured. Copy .env.example to .env, set MONGODB_URI and admin settings, run npm run dev, then refresh.";
